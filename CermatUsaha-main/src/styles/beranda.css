@@ -1,0 +1,77 @@
+/* ===== Header ===== */
+.home-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.biz { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.biz-avatar {
+  width: 46px; height: 46px; flex-shrink: 0; border-radius: 15px;
+  display: grid; place-items: center;
+  background: var(--brand); color: #fff; font-weight: 800; font-size: 19px;
+}
+.biz-text { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
+.biz-text small { font-size: 13px; color: var(--muted); }
+.biz-text strong { font-size: 18px; font-weight: 800; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.home { display: flex; flex-direction: column; gap: 12px; }
+.home:not(.is-empty) .start-card { display: none; }
+
+/* ===== Kartu kecil untung (saklar FITUR.ringkasanUang) ===== */
+.money-card {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 14px 16px; border-radius: var(--radius-lg);
+  background: var(--brand); color: #fff;
+}
+.money-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 13.5px; font-weight: 600; opacity: 0.92; }
+.money-trend {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 2px 8px 2px 6px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16); font-size: 12px; font-weight: 700;
+}
+.money-card strong { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; }
+.money-card small { font-size: 12.5px; opacity: 0.85; }
+.money-card.rugi strong { color: #ffd3cf; }
+
+/* ===== Saran Cermat AI ===== */
+.insight-card { display: flex; flex-direction: column; gap: 10px; border-color: var(--brand-soft); background: linear-gradient(var(--surface), var(--surface)) padding-box; }
+.insight-head { display: flex; align-items: center; gap: 10px; }
+.insight-head strong { flex: 1; font-size: 16px; }
+.insight-body ul { display: flex; flex-direction: column; gap: 8px; padding-left: 20px; }
+.insight-body li { font-size: 15px; line-height: 1.5; }
+.insight-body li::marker { color: var(--brand); }
+.insight-empty { font-size: 14.5px; line-height: 1.5; color: var(--text-2); margin-bottom: 10px; }
+.insight-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
+.insight-foot small { font-size: 12.5px; color: var(--muted); }
+.insight-foot .btn-link { flex-shrink: 0; }
+.skeleton { height: 14px; border-radius: 7px; background: var(--surface-2); animation: pulse 1.2s ease-in-out infinite; }
+.skeleton + .skeleton { margin-top: 10px; }
+.skeleton.short { width: 70%; }
+@keyframes pulse { 50% { opacity: 0.5; } }
+.spin .icon { animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ===== Angka stok ===== */
+.stok-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.stok-tile {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 12px 14px; border-radius: var(--radius);
+  background: var(--surface); border: 1px solid var(--line);
+  transition: transform 0.16s var(--ease-out);
+}
+.stok-tile:active { transform: scale(0.98); }
+.stok-tile small { font-size: 13px; font-weight: 600; color: var(--muted); }
+.stok-tile strong { font-size: 20px; font-weight: 800; }
+.stok-tile.warn strong { color: var(--warn); }
+.stok-tile.out strong { color: var(--out); }
+.stok-tile.wide { grid-column: 1 / -1; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px; }
+.stok-tile.wide .icon { color: var(--warn); font-variation-settings: 'FILL' 1; }
+.stok-tile.wide strong { font-size: 16px; text-align: right; }
+
+/* ===== Mulai dari sini ===== */
+.start-card { display: flex; flex-direction: column; gap: 8px; }
+.start-card h2 { font-size: 17px; }
+.start-card > p { font-size: 14px; color: var(--muted); }
+.start-steps { margin: 0 -10px; }
+.step-no {
+  width: 32px; height: 32px; flex-shrink: 0; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--brand-soft); color: var(--brand-strong); font-weight: 800; font-size: 14px;
+}
+.start-card .btn { margin-top: 4px; }
