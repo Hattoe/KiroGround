@@ -88,7 +88,9 @@ function labaRugi(from, to) {
   const jual = trx.filter((t) => t.jenis === 'penjualan');
 
   const pendapatan = sum(jual, (t) => t.total);
-  const hpp = sum(jual, (t) => sum(t.items || [], (li) => li.qty * (getById('item', li.itemId)?.hargaBeli || 0)));
+  // Modal barang terjual (HPP): pakai harga beli yang tersimpan saat penjualan dicatat.
+  // Transaksi lama (sebelum fitur ini) tidak menyimpannya, jadi mundur ke harga beli item saat ini.
+  const hpp = sum(jual, (t) => sum(t.items || [], (li) => li.qty * (li.hargaBeli ?? getById('item', li.itemId)?.hargaBeli ?? 0)));
   const kotor = pendapatan - hpp;
 
   const kategori = {};
@@ -121,7 +123,7 @@ function labaRugi(from, to) {
       { ket: 'Total biaya operasional', jumlah: -biaya, _style: 'bold' },
       { ket: 'LABA BERSIH', jumlah: bersih, _style: 'total' },
     ],
-    note: 'HPP dihitung dari harga beli item saat ini. Pembelian stok tidak dihitung sebagai biaya.',
+    note: 'HPP dihitung dari harga beli barang saat penjualan dicatat. Pembelian stok tidak dihitung sebagai biaya.',
   };
 }
 
@@ -135,7 +137,8 @@ function penjualanItem(from, to) {
       const r = map.get(li.itemId) || { nama: li.nama || it?.nama || 'Item', satuan: it?.satuan || '', qty: 0, omzet: 0, modal: 0 };
       r.qty += li.qty;
       r.omzet += li.qty * li.harga;
-      r.modal += li.qty * (it?.hargaBeli || 0);
+      // Modal pakai harga beli saat penjualan dicatat; mundur ke harga beli item saat ini untuk transaksi lama
+      r.modal += li.qty * (li.hargaBeli ?? it?.hargaBeli ?? 0);
       map.set(li.itemId, r);
     }));
 

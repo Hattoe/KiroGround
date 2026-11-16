@@ -64,31 +64,6 @@ export function alurBarang(itemId) {
   };
 }
 
-// ===== Grafik arus kas =====
-export function seriArusKas(days = 7) {
-  const trx = getAll('transaksi');
-  const keys = [...Array(days)].map((_, i) =>
-    toDateKey(new Date(Date.now() - (days - 1 - i) * 864e5))
-  );
-
-  let saldo =
-    sum(getAll('akun'), (a) => a.saldoAwal || 0) +
-    sum(trx.filter((t) => t.tanggal < keys[0]), arusKas);
-
-  return keys.map((tanggal) => {
-    const hari = trx.filter((t) => t.tanggal === tanggal);
-    const total = (jenis) =>
-      sum(hari.filter((t) => jenis.includes(t.jenis)), (t) => Math.abs(arusKas(t)));
-
-    const masuk = total(['penjualan', 'uang_masuk']);
-    const keluar = total(['uang_keluar', 'pengeluaran']);
-    const pembelian = total(['pembelian']);
-    saldo += masuk - keluar - pembelian;
-
-    return { tanggal, masuk, keluar, pembelian, saldo };
-  });
-}
-
 // ===== Grafik arus kas per periode =====
 export function seriArus(mode = 'harian') {
   const trx = getAll('transaksi');

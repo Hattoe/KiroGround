@@ -277,7 +277,7 @@ export function openFakturForm(jenis) {
           onPick: (it) => {
             const ada = lines.find((l) => l.itemId === it.id);
             if (ada) ada.qty++;
-            else lines.push({ itemId: it.id, nama: it.nama, satuan: it.satuan, qty: 1, harga: it[cfg.harga] || 0 });
+            else lines.push({ itemId: it.id, nama: it.nama, satuan: it.satuan, qty: 1, harga: it[cfg.harga] || 0, hargaBeli: it.hargaBeli || 0 });
             renderLines();
           },
         })
@@ -292,7 +292,10 @@ export function openFakturForm(jenis) {
 
         add('transaksi', {
           jenis,
-          items: lines.map(({ itemId, nama, qty, harga }) => ({ itemId, nama, qty, harga })),
+          // hargaBeli disimpan hanya untuk penjualan: modal barang saat dijual, agar laba rugi masa lalu tidak berubah
+          // ketika harga beli barang diubah kemudian. Pembelian tidak butuh ini.
+          items: lines.map(({ itemId, nama, qty, harga, hargaBeli }) =>
+            jenis === 'penjualan' ? { itemId, nama, qty, harga, hargaBeli } : { itemId, nama, qty, harga }),
           total: t,
           dibayar: t,
           akunId: 'kas',
