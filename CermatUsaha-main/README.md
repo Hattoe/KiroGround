@@ -74,6 +74,15 @@ src/utils/            format rupiah, PDF, OCR, lampiran file, terbilang
 src/styles/           CSS per bagian
 ```
 
+## Cara menghitung uang
+
+Aplikasi sengaja membedakan dua hal yang sering dikira sama, jadi angka di beberapa layar bisa berbeda walau semuanya benar:
+
+- **Penjualan (omzet)** = nilai barang yang terjual, dibayar penuh atau belum.
+- **Uang masuk (kas)** = uang yang benar-benar diterima dan masuk ke laci.
+
+Contoh: jual Rp 750.000 tapi baru dibayar Rp 400.000 → penjualan +Rp 750.000, uang masuk +Rp 400.000. Jadi "penjualan Rp 1,4 jt" di Beranda vs "uang masuk Rp 1,2 jt" di Riwayat bukan bug — yang satu nilai jualan, yang satu uang yang sudah di tangan. Begitu juga **laba/rugi** beda dengan **uang di kas**. Penjelasan lengkap untuk tim ada di [`.kiro/steering/money-concepts.md`](.kiro/steering/money-concepts.md).
+
 ## Catatan prototype
 
 - Data dan akun disimpan di browser (localStorage) pada perangkat masing-masing, belum ada server database.
