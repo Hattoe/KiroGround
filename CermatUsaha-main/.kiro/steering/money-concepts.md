@@ -90,3 +90,37 @@ pengeluaran yang memang habis, bukan jadi stok.
 - **Laba** = penjualan − modal terjual − biaya. Beda dengan **uang di kas**.
 - **HPP** dikunci saat jualan dicatat, biar laporan lama tidak berubah.
 - **Belanja stok** bukan biaya; jadi biaya saat barangnya terjual.
+
+---
+
+## Lampiran: ringkasan perubahan dari versi awal
+
+Catatan untuk tim — apa saja yang sudah diubah dari versi CermatUsaha yang pertama,
+dan apa yang sengaja **tidak** diubah. Total: 5 berkas, lewat 2 pull request.
+
+### PR #1 — perbaikan kode (sudah digabung ke `main`)
+Branch `fix/hpp-snapshot-and-cleanup`.
+
+1. **`src/components/itemForms.js`** — penjualan kini menyimpan `hargaBeli`
+   (modal barang **saat dijual**) di tiap barisnya. Belanja tidak diubah.
+2. **`src/data/reports.js`** — HPP di `labaRugi()` dan `penjualanItem()` dibaca dari
+   `hargaBeli` yang tersimpan itu (mundur ke harga beli barang sekarang untuk
+   transaksi lama). Ini memperbaiki bug: dulu mengubah harga beli ikut mengubah
+   laba rugi bulan-bulan lalu.
+3. **`src/data/selectors.js`** — menghapus fungsi `seriArusKas()` yang tidak terpakai
+   (sudah digantikan `seriArus()`).
+
+### PR #2 — dokumentasi (berkas ini)
+Branch `docs/money-concepts`.
+
+4. **`README.md`** — bagian singkat "Cara menghitung uang".
+5. **`.kiro/steering/money-concepts.md`** — berkas ini (penjelasan konsep uang +
+   ringkasan perubahan).
+
+### Yang sengaja TIDAK diubah
+- Backend AI (`server/ai.js`, `api/ai.js`, `vite.config.js`, `.env.example`) —
+  rencana pindah dari Gemini ke Kiro CLI sudah diteliti lalu diputuskan **tidak**
+  dijalankan. Semua kode AI tetap seperti aslinya.
+- Angka di layar chat, Beranda, Riwayat, dan Laporan sudah dicek benar, jadi tidak
+  ada yang diperbaiki di sana.
+- Ide tambahan (ubah/hapus transaksi, dll.) baru usulan, belum dikerjakan.
